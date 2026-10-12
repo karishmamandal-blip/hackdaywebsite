@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Hacktoberfest Hack Day 2026 · Tumakur × upGrad School of Technology</title>
+<meta name="description" content="A full day of building with open-source AI. Saturday 24 October 2026, UgSOT Block, Tumakur. Free, beginner-friendly, laptop-only.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Fraunces:ital,opsz,wght@1,9..144,500;1,9..144,700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* light = "daylight" */
+  --bg:#f4ecd8; --bg2:#ebe0c4; --surface:#fffaf0; --ink:#1d332e; --muted:#4e665f;
+  --brand:#3d5f58; --brand-deep:#2a4540; --on-brand:#f4ecd8;
+  --red:#d8232a; --on-red:#fff; --gold:#e8a21a; --leaf:#5aa37c;
+  --line:rgba(29,51,46,.2); --shadow:rgba(29,51,46,.18);
+  --grid:rgba(29,51,46,.07);
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#13231f; --bg2:#1a2e28; --surface:#21403a; --ink:#f4ecd8; --muted:#b7c6be;
+    --brand:#3d5f58; --brand-deep:#2a4540; --on-brand:#f4ecd8;
+    --red:#f0353b; --gold:#f5b942; --leaf:#7cc99c;
+    --line:rgba(244,236,216,.18); --shadow:rgba(0,0,0,.45); --grid:rgba(244,236,216,.06);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#13231f; --bg2:#1a2e28; --surface:#21403a; --ink:#f4ecd8; --muted:#b7c6be;
+  --brand:#3d5f58; --brand-deep:#2a4540; --on-brand:#f4ecd8;
+  --red:#f0353b; --gold:#f5b942; --leaf:#7cc99c;
+  --line:rgba(244,236,216,.18); --shadow:rgba(0,0,0,.45); --grid:rgba(244,236,216,.06);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 84px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Bricolage Grotesque",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;font-size:17px;line-height:1.6;overflow-x:hidden;transition:background .3s,color .3s}
+img,svg{max-width:100%}
+a{color:inherit}
+h1,h2,h3{font-weight:800;line-height:1.05;letter-spacing:-.02em;margin:0}
+em{font-family:Fraunces,Georgia,"Times New Roman",serif;font-style:italic;font-weight:700;letter-spacing:-.01em;color:var(--red)}
+.mono{font-family:"JetBrains Mono",ui-monospace,Menlo,Consolas,monospace}
+.wrap{width:min(1120px,100% - 40px);margin-inline:auto}
+section{padding:92px 0;position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font:700 12.5px/1 "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.12em;color:var(--brand);background:color-mix(in srgb,var(--brand) 14%,transparent);border:1.5px solid var(--line);padding:9px 14px;border-radius:99px;margin-bottom:20px}
+:root[data-theme="dark"] .eyebrow{color:var(--leaf)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .eyebrow{color:var(--leaf)}}
+h2{font-size:clamp(34px,5vw,56px)}
+.lead{color:var(--muted);font-size:19px;max-width:640px;margin:16px 0 0}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;font:700 16px/1 "Bricolage Grotesque",sans-serif;padding:16px 24px;border-radius:99px;text-decoration:none;border:2px solid transparent;cursor:pointer;transition:transform .15s,box-shadow .15s,background .2s}
+.btn:hover{transform:translateY(-2px)}
+.btn:focus-visible,a:focus-visible,summary:focus-visible,button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+.btn-red{background:var(--red);color:var(--on-red);box-shadow:0 6px 0 color-mix(in srgb,var(--red) 55%,#000)}
+.btn-red:hover{box-shadow:0 8px 0 color-mix(in srgb,var(--red) 55%,#000)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:var(--bg)}
+
+/* header */
+header.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:50;backdrop-filter:blur(14px);background:color-mix(in srgb,var(--bg) 82%,transparent);border-bottom:1.5px solid var(--line)}
+.nav .wrap{display:flex;align-items:center;justify-content:space-between;height:68px;gap:16px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;font-weight:800;letter-spacing:-.01em}
+.brand .mark{width:38px;height:38px;border-radius:12px;background:var(--brand);color:var(--on-brand);display:grid;place-items:center;font:800 14px "JetBrains Mono",monospace;transform:rotate(-6deg);box-shadow:3px 3px 0 var(--red)}
+.brand small{display:block;font:500 11px/1.2 "JetBrains Mono",monospace;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.links{display:flex;gap:4px;align-items:center}
+.links a{text-decoration:none;font-weight:600;font-size:15px;padding:9px 13px;border-radius:99px;color:var(--muted)}
+.links a:hover{color:var(--ink);background:color-mix(in srgb,var(--brand) 16%,transparent)}
+.links .btn{padding:11px 18px;font-size:15px;color:var(--on-red);margin-left:6px}
+.links .btn:hover{background:var(--red);color:var(--on-red)}
+.icon-btn{width:42px;height:42px;border-radius:50%;border:1.5px solid var(--line);background:transparent;color:var(--ink);cursor:pointer;font-size:18px;display:grid;place-items:center}
+.menu-btn{display:none}
+@media (max-width:900px){
+  .menu-btn{display:grid}
+  .links{position:absolute;top:68px;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--bg);border-bottom:1.5px solid var(--line);padding:12px 20px 20px;display:none}
+  .links.open{display:flex}
+  .links a{padding:13px 14px}
+  .links .btn{justify-content:center;margin:8px 0 0}
+}
+
+/* hero */
+.hero{padding:70px 0 100px;background:
+  radial-gradient(900px 500px at 85% -10%,color-mix(in srgb,var(--brand) 55%,transparent),transparent 70%),
+  radial-gradient(700px 400px at -10% 100%,color-mix(in srgb,var(--red) 14%,transparent),transparent 70%),
+  linear-gradient(var(--grid) 1px,transparent 1px) 0 0/44px 44px,
+  linear-gradient(90deg,var(--grid) 1px,transparent 1px) 0 0/44px 44px,var(--bg);overflow:hidden}
+.hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:56px;align-items:center}
+.lockup{display:flex;flex-wrap:wrap;align-items:center;gap:10px;font:700 13px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.1em;margin-bottom:26px}
+.lockup span{padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface)}
+.lockup .x{border:0;background:none;color:var(--red);font-size:18px;padding:0}
+.lockup .ug{background:var(--red);color:var(--on-red);border-color:var(--red)}
+.hero h1{font-size:clamp(46px,7.4vw,92px);margin-bottom:24px}
+.hero h1 em{display:inline-block}
+.hero p.sub{font-size:20px;color:var(--muted);max-width:560px;margin:0 0 32px}
+.cta{display:flex;flex-wrap:wrap;gap:14px}
+.facts{display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:34px;color:var(--muted);font-weight:600;font-size:15px}
+.facts b{color:var(--ink)}
+.facts span{display:inline-flex;align-items:center;gap:10px}
+.facts svg{width:22px;height:22px;flex:none;stroke:var(--red);fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+
+.ticket{position:relative;background:var(--surface);border:2px solid var(--ink);border-radius:26px;padding:28px;transform:rotate(2.2deg);box-shadow:10px 10px 0 var(--brand);transition:transform .3s}
+.ticket:hover{transform:rotate(0deg)}
+.ticket::before,.ticket::after{content:"";position:absolute;left:-14px;top:58%;width:26px;height:26px;border-radius:50%;background:var(--bg);border:2px solid var(--ink)}
+.ticket::after{left:auto;right:-14px}
+.ticket .top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:20px;border-bottom:2.5px dashed var(--line)}
+.ticket .date{font-size:56px;font-weight:800;line-height:.9;letter-spacing:-.04em}
+.ticket .date small{display:block;font:700 13px "JetBrains Mono",monospace;letter-spacing:.1em;color:var(--red);margin-top:10px;text-transform:uppercase}
+.ticket .time{font:700 14px "JetBrains Mono",monospace;text-align:right;color:var(--muted)}
+.countdown{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:22px 0 18px;text-align:center}
+.countdown div{background:var(--bg2);border-radius:14px;padding:12px 4px}
+.countdown b{display:block;font:800 30px/1 "JetBrains Mono",monospace}
+.countdown span{font:600 11px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--muted)}
+.ticket .venue{font-size:15px;color:var(--muted);line-height:1.5}
+.ticket .venue b{color:var(--ink)}
+.ticket .btn{width:100%;justify-content:center;margin-top:18px}
+.cal{display:flex;gap:14px;justify-content:center;margin-top:14px;font-size:14px;font-weight:600}
+.cal a{color:var(--muted)}
+.sticker{position:absolute;display:grid;place-items:center;border-radius:50%;border:4px solid #fff;box-shadow:0 8px 20px var(--shadow);font-size:34px;animation:bob 6s ease-in-out infinite}
+.s1{top:-34px;right:-14px;width:84px;height:84px;background:var(--gold);transform:rotate(14deg)}
+.s2{bottom:-30px;left:-24px;width:92px;height:92px;background:var(--red);transform:rotate(-12deg);animation-delay:-2s}
+.s3{bottom:80px;right:-30px;width:68px;height:68px;background:var(--leaf);transform:rotate(8deg);animation-delay:-4s;font-size:28px}
+@keyframes bob{50%{translate:0 -9px}}
+@media (max-width:900px){.hero .wrap{grid-template-columns:1fr}.ticket{max-width:460px;margin-inline:auto}.s3{right:-10px}}
+
+/* marquee */
+.marquee{background:var(--brand);color:var(--on-brand);border-block:2px solid var(--ink);overflow:hidden;padding:16px 0;transform:rotate(-1deg);margin:-14px -20px 0;position:relative;z-index:2}
+.marquee .track{display:flex;gap:40px;width:max-content;animation:slide 32s linear infinite;font:800 22px "Bricolage Grotesque",sans-serif;text-transform:uppercase;letter-spacing:.02em}
+.marquee span::after{content:"✦";margin-left:40px;color:var(--gold)}
+@keyframes slide{to{transform:translateX(-50%)}}
+
+/* stats */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.stat{background:var(--surface);border:2px solid var(--line);border-radius:22px;padding:24px}
+.stat b{display:block;font-size:46px;font-weight:800;letter-spacing:-.04em;line-height:1}
+.stat span{color:var(--muted);font-weight:600;font-size:15px}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,1fr)}}
+
+/* about */
+.two{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start}
+@media (max-width:860px){.two{grid-template-columns:1fr}}
+.card{background:var(--surface);border:2px solid var(--line);border-radius:24px;padding:28px}
+.bring{list-style:none;padding:0;margin:18px 0 0;display:grid;gap:12px}
+.bring li{display:flex;gap:14px;align-items:center;font-weight:600}
+.bring i{font-style:normal;width:48px;height:48px;border-radius:14px;background:var(--bg2);color:var(--ink);display:grid;place-items:center;flex:none;border:1.5px solid var(--line)}
+.bring svg{width:26px;height:26px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.bring .acc{stroke:var(--red)}
+.chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.chip{border:1.5px solid var(--ink);border-radius:99px;padding:8px 16px;font-weight:700;font-size:15px;background:var(--bg)}
+
+/* schedule */
+.band{background:var(--bg2);border-block:2px solid var(--line)}
+.timeline{margin-top:48px;display:grid;gap:12px}
+.slot{display:grid;grid-template-columns:200px 1fr auto;gap:18px;align-items:center;background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:18px 22px;transition:transform .2s,border-color .2s}
+.slot:hover{transform:translateX(6px);border-color:var(--brand)}
+.slot time{font:700 15px "JetBrains Mono",monospace;color:var(--brand)}
+:root[data-theme="dark"] .slot time{color:var(--leaf)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .slot time{color:var(--leaf)}}
+.slot h3{font-size:20px;letter-spacing:-.01em}
+.slot .tag{font:700 12px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;padding:6px 12px;border-radius:99px;background:var(--bg2);color:var(--muted)}
+.slot.build{border-left:8px solid var(--red)}
+.slot.break{background:transparent;border-style:dashed;opacity:.85}
+.slot.now{border-color:var(--red);box-shadow:0 0 0 4px color-mix(in srgb,var(--red) 25%,transparent)}
+.slot.now .tag{background:var(--red);color:var(--on-red)}
+.note{font-size:14px;color:var(--muted);margin-top:18px}
+@media (max-width:700px){.slot{grid-template-columns:1fr;gap:6px}.slot .tag{justify-self:start}}
+
+/* problems */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin:34px 0 28px}
+.filters button{font:700 15px "Bricolage Grotesque",sans-serif;padding:11px 20px;border-radius:99px;border:2px solid var(--ink);background:transparent;color:var(--ink);cursor:pointer}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:20px}
+.prob{display:flex;flex-direction:column;background:var(--surface);border:2px solid var(--line);border-radius:26px;padding:26px;position:relative;transition:transform .2s,border-color .2s}
+.prob:hover{transform:translateY(-6px);border-color:var(--ink)}
+.prob .n{position:absolute;top:-16px;right:20px;width:46px;height:46px;border-radius:50%;background:var(--brand);color:var(--on-brand);display:grid;place-items:center;font:800 18px "JetBrains Mono",monospace;border:3px solid var(--bg);transform:rotate(8deg)}
+.lvl{align-self:flex-start;font:700 12px "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.08em;padding:6px 12px;border-radius:99px;margin-bottom:14px}
+.lvl.Foundation{background:var(--gold);color:#2b2100}
+.lvl.Beginner{background:var(--leaf);color:#0f2a1c}
+.lvl.Intermediate{background:var(--red);color:var(--on-red)}
+.prob h3{font-size:27px;margin-bottom:10px}
+.prob p{margin:0 0 14px;color:var(--muted);font-size:16px}
+.meta{display:grid;gap:6px;font-size:14px;margin-bottom:14px}
+.meta div{display:flex;gap:8px}
+.meta b{min-width:84px;font:700 12px/1.9 "JetBrains Mono",monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--brand)}
+:root[data-theme="dark"] .meta b{color:var(--leaf)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .meta b{color:var(--leaf)}}
+details{border-top:1.5px dashed var(--line);padding-top:12px}
+summary{cursor:pointer;font-weight:700;list-style:none;display:flex;justify-content:space-between;align-items:center}
+summary::-webkit-details-marker{display:none}
+summary::after{content:"+";font:700 22px "JetBrains Mono",monospace;color:var(--red)}
+details[open] summary::after{content:"–"}
+details ul{margin:12px 0 0;padding-left:20px;color:var(--muted);font-size:15px}
+.prob .links2{margin-top:auto;padding-top:18px;display:flex;gap:10px;flex-wrap:wrap}
+.prob .links2 a{font-weight:700;font-size:14px;text-decoration:none;padding:10px 16px;border-radius:99px;border:2px solid var(--ink)}
+.prob .links2 a.primary{background:var(--ink);color:var(--bg)}
+.prob .links2 a:hover{background:var(--red);border-color:var(--red);color:var(--on-red)}
+.hidden{display:none!important}
+.own{margin-top:28px;border:2.5px dashed var(--line);border-radius:22px;padding:22px 26px;display:flex;gap:16px;align-items:center;font-weight:600}
+.own span{font-size:30px}
+
+/* steps */
+.steps{counter-reset:s;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:18px;margin-top:44px}
+.step{counter-increment:s;background:var(--brand);color:var(--on-brand);border-radius:24px;padding:26px;position:relative;border:2px solid var(--ink)}
+.step::before{content:"0" counter(s);display:block;font:800 40px/1 "JetBrains Mono",monospace;color:var(--gold);margin-bottom:14px}
+.step h3{font-size:22px;margin-bottom:8px;letter-spacing:-.01em}
+.step p{margin:0;font-size:15.5px;opacity:.9}
+.step code{background:rgba(0,0,0,.25);padding:2px 7px;border-radius:6px;font:600 13px "JetBrains Mono",monospace}
+.steps a{color:var(--gold)}
+.callout{margin-top:30px;background:color-mix(in srgb,var(--gold) 22%,var(--surface));border:2px solid var(--gold);border-radius:22px;padding:22px 26px;display:flex;gap:16px}
+.callout span{font-size:28px}
+.callout p{margin:0}
+
+/* resources */
+.res{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;margin-top:40px}
+.res a{display:block;text-decoration:none;background:var(--surface);border:2px solid var(--line);border-radius:20px;padding:22px;transition:transform .2s,border-color .2s}
+.res a:hover{transform:translateY(-4px);border-color:var(--red)}
+.res small{font:700 11px "JetBrains Mono",monospace;letter-spacing:.1em;text-transform:uppercase;color:var(--red)}
+.res h3{font-size:18px;letter-spacing:-.01em;margin:8px 0 6px;line-height:1.25}
+.res p{margin:0;color:var(--muted);font-size:14.5px}
+
+/* host + faq */
+.host{display:flex;gap:22px;align-items:center;flex-wrap:wrap}
+.avatar{width:84px;height:84px;border-radius:50%;background:var(--red);color:var(--on-red);display:grid;place-items:center;font:800 32px "Bricolage Grotesque",sans-serif;border:4px solid var(--bg);box-shadow:0 0 0 2px var(--ink)}
+.faq{max-width:820px;margin-top:40px;display:grid;gap:12px}
+.faq details{background:var(--surface);border:2px solid var(--line);border-radius:18px;padding:20px 24px}
+.faq summary{font-size:18px}
+.faq p{margin:12px 0 0;color:var(--muted)}
+
+/* final cta + footer */
+.final{background:var(--brand);color:var(--on-brand);text-align:center;border-block:2px solid var(--ink);overflow:hidden}
+.final h2 em{color:var(--gold)}
+.final .lead{color:color-mix(in srgb,var(--on-brand) 82%,transparent);margin-inline:auto}
+.final .cta{justify-content:center;margin-top:30px}
+.final .btn-ghost{color:var(--on-brand);border-color:var(--on-brand)}
+.final .btn-ghost:hover{background:var(--on-brand);color:var(--brand-deep)}
+footer{padding:44px 0 56px;font-size:14.5px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px}
+footer a{color:var(--ink)}
+footer p{margin:0;max-width:560px}
+
+.js .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s,transform .6s}
+.js .reveal.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+  .js .reveal{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="#top" aria-label="Hack Day home">
+      <span class="mark">HD</span>
+      <span>Hack Day <small>uGSOT × Tumakur</small></span>
+    </a>
+    <nav class="links" id="links" aria-label="Main">
+      <a href="#about">About</a>
+      <a href="#schedule">Schedule</a>
+      <a href="#problems">Problems</a>
+      <a href="#start">Get started</a>
+      <a href="#resources">Resources</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn btn-red" href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology/register" target="_blank" rel="noopener">Register</a>
+    </nav>
+    <div style="display:flex;gap:8px">
+      <button class="icon-btn" id="theme" aria-label="Toggle dark and light theme" title="Toggle theme">◐</button>
+      <button class="icon-btn menu-btn" id="menu" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+  </div>
+</header>
+
+<main id="top">
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <div class="lockup">
+        <span>Hacktoberfest 2026</span><span class="x">×</span><span class="ug">upGrad School of Technology</span>
+      </div>
+      <h1>Hack Day.<br>Build with <em>open-source AI.</em></h1>
+      <p class="sub">One day. One laptop. A real project you built yourself. Pick a problem, form a team, and demo it to the room, whether you're writing your first line of code or your thousandth.</p>
+      <div class="cta">
+        <a class="btn btn-red" href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology/register" target="_blank" rel="noopener">Register on MLH →</a>
+        <a class="btn btn-ghost" href="#problems">See problem statements</a>
+      </div>
+      <div class="facts">
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><b>Sat, 24 Oct 2026</b></span>
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><b>9:00 AM – 6:00 PM IST</b></span>
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg><b>Tumakur, Karnataka</b></span>
+      </div>
+    </div>
+
+    <div style="position:relative">
+      <div class="sticker s1" aria-hidden="true">🎃</div>
+      <div class="ticket">
+        <div class="top">
+          <div class="date">24<small>October 2026</small></div>
+          <div class="time">SATURDAY<br>09:00 → 18:00<br>IST</div>
+        </div>
+        <div class="countdown" id="countdown" aria-live="off">
+          <div><b id="cd-d">--</b><span>days</span></div>
+          <div><b id="cd-h">--</b><span>hrs</span></div>
+          <div><b id="cd-m">--</b><span>min</span></div>
+          <div><b id="cd-s">--</b><span>sec</span></div>
+        </div>
+        <div class="venue"><b>Sri Siddhartha Academy of Higher Education</b><br>UgSOT Block, Kunigal-Tumkur Rd, Maralur, Saraswathipuram, Tumakur 572105</div>
+        <a class="btn btn-red" href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology/register" target="_blank" rel="noopener">Log in &amp; register</a>
+        <div class="cal">
+          <a href="https://www.google.com/calendar/render?action=TEMPLATE&dates=20261024T033000Z%2F20261024T123000Z&details=See+event%3A+https%3A%2F%2Fevents.mlh.com%2Fevents%2F15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology&text=Hacktoberfest+Hack+Day+Tumakur+x+Upgrad+School+Of+Technology" target="_blank" rel="noopener">+ Google Calendar</a>
+          <a href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology.ics">+ Apple / Outlook (.ics)</a>
+        </div>
+      </div>
+      <div class="sticker s2" aria-hidden="true">🤖</div>
+      <div class="sticker s3" aria-hidden="true">✨</div>
+    </div>
+  </div>
+</section>
+
+<div class="marquee" aria-hidden="true">
+  <div class="track">
+    <span>AI belongs to everyone</span><span>Open-weight models</span><span>Build · Demo · Repeat</span><span>Free for everyone</span>
+    <span>AI belongs to everyone</span><span>Open-weight models</span><span>Build · Demo · Repeat</span><span>Free for everyone</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="wrap">
+    <div class="two">
+      <div class="reveal">
+        <span class="eyebrow">About the day</span>
+        <h2>A full day of <em>building,</em> not just listening.</h2>
+        <p class="lead">Hacktoberfest 2026 is all about building with open-weight models and open-source AI. This Hack Day is our local Fest: starter templates, mentors on the floor all day, and a curated set of problem statements. Bring your own idea if you'd rather.</p>
+        <p class="lead">You'll form a team, build something, and show it to the room before the day ends. Every tool and model we use is free, and the coding projects run in Google Colab, so there's nothing to install.</p>
+      </div>
+      <div class="card reveal">
+        <h3 style="font-size:26px">What to bring</h3>
+        <ul class="bring">
+          <li><i><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="11" rx="2"/><path class="acc" d="M2 19h20"/></svg></i> Your laptop (with a web browser)</li>
+          <li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 2v5M15 2v5"/><path d="M6 7h12v4a6 6 0 0 1-12 0V7z"/><path class="acc" d="M12 17v5"/></svg></i> Your charger</li>
+          <li><i><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/><path class="acc" d="M9.5 18.5h5M10.5 21h3"/></svg></i> Curiosity. Everything else is covered.</li>
+          <li><i><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path class="acc" d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg></i> A Google account (for Colab and Sheets)</li>
+        </ul>
+        <h3 style="font-size:20px;margin-top:28px">Who can attend?</h3>
+        <div class="chips">
+          <span class="chip">University students</span><span class="chip">School students</span><span class="chip">Working professionals</span><span class="chip">Other students</span>
+        </div>
+      </div>
+    </div>
+    <div class="stats reveal">
+      <div class="stat"><b>1</b><span>day, 9 AM to 6 PM</span></div>
+      <div class="stat"><b>5</b><span>problem statements</span></div>
+      <div class="stat"><b>2–4</b><span>people per team</span></div>
+      <div class="stat"><b>0</b><span>installs needed</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section id="schedule" class="band">
+  <div class="wrap">
+    <span class="eyebrow">Schedule</span>
+    <h2>How the day <em>unfolds.</em></h2>
+    <p class="lead">From inauguration to showcase. If you open this page on the day, the current session lights up.</p>
+    <div class="timeline" id="timeline"></div>
+    <p class="note">Schedule is approximate and may shift slightly on the day. All times IST.</p>
+  </div>
+</section>
+
+<!-- PROBLEMS -->
+<section id="problems">
+  <div class="wrap">
+    <span class="eyebrow">Problem statements</span>
+    <h2>Pick your <em>challenge.</em></h2>
+    <p class="lead">Each team of 2–4 chooses one problem, and every project ends with a working demo. No coding experience? Start with Problem 1, 2 or 3.</p>
+    <div class="filters" id="filters" role="group" aria-label="Filter by level">
+      <button aria-pressed="true" data-f="all">All</button>
+      <button aria-pressed="false" data-f="Foundation">Foundation · no coding</button>
+      <button aria-pressed="false" data-f="Beginner">Beginner</button>
+      <button aria-pressed="false" data-f="Intermediate">Intermediate</button>
+    </div>
+    <div class="grid" id="problems-grid"></div>
+    <div class="own reveal"><span>💡</span><div>Got your own idea? You're welcome to bring it, as long as it involves open-source AI. Chat with a mentor during Problem Statement Selection (11:00 AM).</div></div>
+  </div>
+</section>
+
+<!-- GET STARTED -->
+<section id="start" class="band">
+  <div class="wrap">
+    <span class="eyebrow">Get started</span>
+    <h2>Register, show up, <em>build.</em></h2>
+    <div class="steps">
+      <div class="step reveal"><h3>Register on MLH</h3><p>Log in and register on the <a href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology/register" target="_blank" rel="noopener">event page</a>. You'll be asked which college you're joining from.</p></div>
+      <div class="step reveal"><h3>Join the WhatsApp group</h3><p>Updates, team-finding and mentor announcements land <a href="https://chat.whatsapp.com/LclUjPPxySy62dUWWBRSxP?mode=gi_t" target="_blank" rel="noopener">in the group</a>.</p></div>
+      <div class="step reveal"><h3>Prep your tools</h3><p>Make sure you can sign in to Google. For Problems 2, 3 and 5 create a free key at <code>console.groq.com</code> (the worksheet or notebook walks you through it).</p></div>
+      <div class="step reveal"><h3>Build &amp; demo</h3><p>In Colab, copy the notebook with <code>File → Save a copy in Drive</code>, run cells top to bottom, and edit at each <code>STUDENT TODO</code>.</p></div>
+    </div>
+    <div class="callout reveal">
+      <span>🏅</span>
+      <p><b>About Hacktoberfest swag:</b> sign in to <a href="https://hacktoberfest.com/my/" target="_blank" rel="noopener">My Hacktoberfest</a> with MyMLH and add your address. Collect three virtual stickers and a real sticker pack is mailed to you, 8–12 weeks after Hacktoberfest ends. Heads-up: pull requests no longer count towards Hacktoberfest rewards this year. Ask the organisers about local swag on the day.</p>
+    </div>
+  </div>
+</section>
+
+<!-- RESOURCES -->
+<section id="resources">
+  <div class="wrap">
+    <span class="eyebrow">Resources</span>
+    <h2>Read before <em>Hack Day.</em></h2>
+    <p class="lead">Nine links to warm up on open-weight models, agents and Gemma. Skim a couple the night before.</p>
+    <div class="res" id="res"></div>
+  </div>
+</section>
+
+<!-- HOST + FAQ -->
+<section id="faq" class="band">
+  <div class="wrap">
+    <div class="host reveal">
+      <div class="avatar">M</div>
+      <div>
+        <span class="eyebrow" style="margin:0 0 8px">Hosted by</span>
+        <h3 style="font-size:28px">Mithun S · upGrad School of Technology</h3>
+        <p style="margin:6px 0 0;color:var(--muted);max-width:620px">upGrad School of Technology (uGSOT) is a modern, tech-focused engineering institution established by upGrad. Questions? Use the <a href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology" target="_blank" rel="noopener">Contact Host</a> link on the MLH event page.</p>
+      </div>
+    </div>
+    <h2 style="margin-top:80px">Questions, <em>answered.</em></h2>
+    <div class="faq">
+      <details><summary>Do I need to know how to code?</summary><p>No. Problems 1 and 2 need no coding at all, and Problem 3 only asks you to edit text and settings in a chatbot that already works. Mentors are on the floor all day.</p></details>
+      <details><summary>What do I need to bring?</summary><p>A laptop with a web browser, a charger and curiosity. You'll also need a Google account. Problems 2, 3 and 5 use a free Groq account or API key.</p></details>
+      <details><summary>Can I come alone or bring my own idea?</summary><p>Yes to both. Teams (2–4 people) are formed during the 11:30 AM Team Building slot, and you can propose your own open-source-AI idea instead of a listed problem.</p></details>
+      <details><summary>Is it free?</summary><p>Hacktoberfest is free for everyone, and all models and tools used on the day are free.</p></details>
+      <details><summary>Do pull requests count towards swag?</summary><p>Not this year. Hacktoberfest 2026 moved to learning and building together, so rewards come from attending Fests and online activities rather than PRs. You're still very welcome to contribute to open source and share your work.</p></details>
+      <details><summary>What happens at the showcase?</summary><p>Every team demos a working project to the room (5:30 PM). Each problem statement lists exactly what to present, for example a live demo plus before-and-after results.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final">
+  <div class="wrap reveal">
+    <h2>See you on <em>24 October.</em></h2>
+    <p class="lead">Seats are managed through MLH. Register, join the WhatsApp group and pick a problem you're excited about.</p>
+    <div class="cta">
+      <a class="btn btn-red" href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology/register" target="_blank" rel="noopener">Register now →</a>
+      <a class="btn btn-ghost" href="https://chat.whatsapp.com/LclUjPPxySy62dUWWBRSxP?mode=gi_t" target="_blank" rel="noopener">Join WhatsApp group</a>
+      <a class="btn btn-ghost" href="https://www.google.com/maps/search/?api=1&query=839V%2B8G9+Maralur+Tumakur" target="_blank" rel="noopener">Open in Maps</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Hack Day Tumakur × upGrad School of Technology is a local Fest of <a href="https://hacktoberfest.com/" target="_blank" rel="noopener">Hacktoberfest 2026</a>, powered by MLH and DEV and presented by DigitalOcean. This is the community page for our event. Official registration happens on <a href="https://events.mlh.com/events/15382-hacktoberfest-hack-day-tumakur-x-upgrad-school-of-technology" target="_blank" rel="noopener">MLH</a>.</p>
+    
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+var REPO='https://github.com/mithun-srinivas/HacktoberFest-HackDay/blob/main/';
+var COLAB='https://colab.research.google.com/github/mithun-srinivas/HacktoberFest-HackDay/blob/main/templates/';
+
+/* theme toggle */
+(function(){
+  var root=document.documentElement;
+  try{var t=localStorage.getItem('hd-theme'); if(t) root.setAttribute('data-theme',t);}catch(e){}
+  document.getElementById('theme').addEventListener('click',function(){
+    var cur=root.getAttribute('data-theme');
+    if(!cur) cur=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';
+    var next=cur==='dark'?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('hd-theme',next);}catch(e){}
+  });
+  var links=document.getElementById('links'), btn=document.getElementById('menu');
+  btn.addEventListener('click',function(){var o=links.classList.toggle('open');btn.setAttribute('aria-expanded',o);});
+  links.addEventListener('click',function(e){if(e.target.tagName==='A'){links.classList.remove('open');btn.setAttribute('aria-expanded','false');}});
+})();
+
+/* countdown */
+(function(){
+  var start=new Date('2026-10-24T09:00:00+05:30').getTime(), end=new Date('2026-10-24T18:00:00+05:30').getTime();
+  var d=document.getElementById('cd-d'),h=document.getElementById('cd-h'),m=document.getElementById('cd-m'),s=document.getElementById('cd-s');
+  function pad(n){return String(n).padStart(2,'0');}
+  function tick(){
+    var now=Date.now(), diff=start-now;
+    if(now>=start&&now<=end){document.getElementById('countdown').innerHTML='<div style="grid-column:1/-1"><b>LIVE NOW</b><span>Hack Day is on!</span></div>';return;}
+    if(now>end){document.getElementById('countdown').innerHTML='<div style="grid-column:1/-1"><b>Thank you!</b><span>See you next Hacktoberfest</span></div>';return;}
+    d.textContent=pad(Math.floor(diff/864e5));
+    h.textContent=pad(Math.floor(diff%864e5/36e5));
+    m.textContent=pad(Math.floor(diff%36e5/6e4));
+    s.textContent=pad(Math.floor(diff%6e4/1e3));
+    setTimeout(tick,1000);
+  }
+  tick();
+})();
+
+/* schedule */
+(function(){
+  var rows=[
+    ['09:00','09:30','Inauguration & Welcome','Kick-off'],
+    ['09:30','11:00','Guest Sessions','Talks'],
+    ['11:00','11:30','Problem Statement Selection','Choose'],
+    ['11:30','12:00','Team Building','Teams'],
+    ['12:00','13:00','Build Sprint I','Build'],
+    ['13:00','14:00','Lunch Break','Break'],
+    ['14:00','16:30','Build Sprint II','Build'],
+    ['16:30','16:45','Short Break','Break'],
+    ['16:45','17:30','Final Build & Prep for Showcase','Build'],
+    ['17:30','18:00','Showcase & Wind-up','Demo']
+  ];
+  function fmt(t){var p=t.split(':'),h=+p[0],ap=h>=12?'PM':'AM';h=h%12||12;return h+':'+p[1]+' '+ap;}
+  var box=document.getElementById('timeline');
+  box.innerHTML=rows.map(function(r,i){
+    var cls=r[3]==='Build'?'build':(r[3]==='Break'?'break':'');
+    return '<div class="slot reveal '+cls+'" data-i="'+i+'"><time>'+fmt(r[0])+' – '+fmt(r[1])+'</time><h3>'+r[2]+'</h3><span class="tag">'+r[3]+'</span></div>';
+  }).join('');
+  function mark(){
+    var now=Date.now();
+    box.querySelectorAll('.slot').forEach(function(el,i){
+      var a=new Date('2026-10-24T'+rows[i][0]+':00+05:30').getTime(), b=new Date('2026-10-24T'+rows[i][1]+':00+05:30').getTime();
+      var on=now>=a&&now<b; el.classList.toggle('now',on);
+      el.querySelector('.tag').textContent=on?'Happening now':rows[i][3];
+    });
+  }
+  mark(); setInterval(mark,30000);
+})();
+
+/* problems */
+(function(){
+  var P=[
+    {n:1,t:'Open Model Showdown',l:'Foundation',d:'Compare three free, open AI models in a fair test. Write 10 questions on a theme you choose, score every answer with a simple rubric, and present which model won and why.',tools:'HuggingChat, LMArena, Google Sheets, Google Slides',need:'No coding · no account',show:['Completed scorecard (10 questions × 3 models)','Overall result, notable errors and one unexpected finding','Live comparison using a question from the audience'],ps:'problem-statements/01_open_model_showdown.md',st:['Worksheet',REPO+'worksheets/01_open_model_showdown.md']},
+    {n:2,t:'Build-a-Bot',l:'Foundation',d:'Design an AI assistant for one specific purpose and audience by writing its instructions (system prompt) in the Groq Playground. Improve it over three versions and try to break it.',tools:'Groq Playground, a shared doc',need:'No coding · free GroqCloud account',show:['Live demo in the Groq Playground','First vs final version answering the same question','Three attempts to make it fail, and your fixes'],ps:'problem-statements/02_build_a_bot.md',st:['Worksheet',REPO+'worksheets/02_build_a_bot.md']},
+    {n:3,t:'Persona Chatbot',l:'Beginner',d:'Start from a chatbot web app that already works and turn it into a chatbot with your own character and purpose. Change its instructions, example questions and settings, then share it with a public link.',tools:'Google Colab, Python, Gradio, Groq API (gpt-oss-20b)',need:'Edit text and settings · free Groq API key',show:['Chatbot available through a public link','Persona that stays consistent for 5+ exchanges','Explain system prompt and temperature, with a demo'],ps:'problem-statements/03_persona_chatbot.md',st:['Open in Colab',COLAB+'03_persona_chatbot.ipynb']},
+    {n:4,t:'Image Classifier',l:'Beginner',d:'Build a web app that identifies what is in a photo from categories you define. The open-weight model runs inside Colab, so no API key is needed. Improve your wording and measure accuracy.',tools:'Google Colab, Python, Gradio, Hugging Face transformers, CLIP',need:'Edit lists and settings · no key',show:['Live demo with a webcam or phone photo','Accuracy on 10 test photos, before and after','Short explanation of zero-shot classification'],ps:'problem-statements/04_image_classifier.md',st:['Open in Colab',COLAB+'04_image_classifier.ipynb']},
+    {n:5,t:'Document Question Answering',l:'Intermediate',d:'Build a web app that answers questions about an uploaded PDF (like a course syllabus) using only that document, and shows the page number for each answer. This is called RAG.',tools:'Google Colab, Python, Gradio, pypdf, sentence-transformers, Groq API',need:'Read and modify a short program · free Groq API key',show:['Live demo with a real PDF and correct page references','Retrieved passages, used to explain how RAG works','A question outside the document that the app declines'],ps:'problem-statements/05_document_question_answering.md',st:['Open in Colab',COLAB+'05_document_question_answering.ipynb']}
+  ];
+  var g=document.getElementById('problems-grid');
+  g.innerHTML=P.map(function(p){
+    return '<article class="prob reveal" data-l="'+p.l+'"><div class="n">'+p.n+'</div><span class="lvl '+p.l+'">'+p.l+'</span><h3>'+p.t+'</h3><p>'+p.d+'</p>'+
+    '<div class="meta"><div><b>Tools</b><span>'+p.tools+'</span></div><div><b>Needs</b><span>'+p.need+'</span></div></div>'+
+    '<details><summary>What you will present</summary><ul>'+p.show.map(function(x){return '<li>'+x+'</li>';}).join('')+'</ul></details>'+
+    '<div class="links2"><a class="primary" href="'+REPO+p.ps+'" target="_blank" rel="noopener">Full problem →</a><a href="'+p.st[1]+'" target="_blank" rel="noopener">'+p.st[0]+'</a></div></article>';
+  }).join('');
+  document.getElementById('filters').addEventListener('click',function(e){
+    var b=e.target.closest('button'); if(!b) return;
+    this.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b);});
+    var f=b.dataset.f;
+    g.querySelectorAll('.prob').forEach(function(c){c.classList.toggle('hidden',f!=='all'&&c.dataset.l!==f);});
+  });
+})();
+
+/* resources */
+(function(){
+  var R=[
+    ['Guide','Agent Skills Explained','Overview of the Agent Skill open standard and SKILL.md authoring.','https://dev.to/loc_carrre_0d798813c662/agent-skills-explained-what-they-are-what-they-arent-and-how-to-use-them-bf9'],
+    ['Guide','Open-Weight LLM API Integration','A developer\u2019s guide to deploying and integrating large open-weight LLMs.','https://dev.to/sbt112321321/beyond-the-black-box-a-developers-guide-to-open-weight-llm-api-integration-1ea6'],
+    ['Guide','Run Gemma 4 Locally with Ollama','Local setup and edge execution for models under 10B parameters.','https://dev.to/purpledoubled/how-to-run-googles-gemma-4-locally-with-ollama-all-4-model-sizes-compared-2pbh'],
+    ['Guide','Hermes Agent: A Practical Guide','Setting up and orchestrating workflows with open-source agent harnesses.','https://dev.to/truongpx396/hermes-agent-the-self-improving-agent-framework-and-how-it-compares-to-openclaw-goclaw-22mc'],
+    ['Gemma','Gemma 4 Resources','General hub and documentation overview.','https://mlh.link/gemma'],
+    ['Gemma','Gemma Quickstart','Getting started guide and rapid API setup.','https://mlh.link/gemma-quickstart'],
+    ['Gemma','Gemma API Docs','Endpoint specifications and API references.','https://mlh.link/gemma-docs'],
+    ['Gemma','Gemma Beginner Guide','Step-by-step introduction for new developers.','https://mlh.link/gemma-beginnerguide'],
+    ['Problem 4','Zero-Shot Image Classification','Hugging Face\u2019s explanation of zero-shot image classification, with demos.','https://huggingface.co/tasks/zero-shot-image-classification']
+  ];
+  document.getElementById('res').innerHTML=R.map(function(r){
+    return '<a class="reveal" href="'+r[3]+'" target="_blank" rel="noopener"><small>'+r[0]+'</small><h3>'+r[1]+' ↗</h3><p>'+r[2]+'</p></a>';
+  }).join('');
+})();
+
+/* reveal on scroll */
+(function(){
+  var els=document.querySelectorAll('.reveal');
+  if(!('IntersectionObserver' in window)){els.forEach(function(e){e.classList.add('in');});return;}
+  var io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.12});
+  els.forEach(function(e){io.observe(e);});
+})();
+</script>
+</body>
+</html>
